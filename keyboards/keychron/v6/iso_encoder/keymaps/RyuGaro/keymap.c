@@ -78,32 +78,40 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     // f1 à f12
-    for (uint8_t i = 1; i <= 20; i++) 
+    for (uint8_t i = 1; i <= 19; i++) 
         rgb_matrix_set_color(i, RGB_RED);
 
     // chiffres 
-    for (uint8_t i = 22; i <= 31; i++) 
+    for (uint8_t i = 21; i <= 32; i++) 
         rgb_matrix_set_color(i, RGB_BLUE);
-    for (uint8_t i = 58; i <= 60; i++) {
+    for (uint8_t i = 57; i <= 59; i++) {
         rgb_matrix_set_color(i, RGB_BLUE);
         rgb_matrix_set_color(i+17, RGB_BLUE);
         rgb_matrix_set_color(i+35, RGB_BLUE);
     }
+    rgb_matrix_set_color(106, RGB_BLUE);
 
     // lettres
-    const unsigned int COLOR[3] = [30,220,220];
-    for (uint8_t i = 43; i <= 54; i++) {
+    const unsigned int COLOR[3] = {0,50,200};
+    for (uint8_t i = 42; i <= 53; i++) {
         rgb_matrix_set_color(i, COLOR[0],COLOR[1],COLOR[2]);
         rgb_matrix_set_color(i+19, COLOR[0],COLOR[1],COLOR[2]);
-        rgb_matrix_set_color(i+27, COLOR[0],COLOR[1],COLOR[2]);
+        rgb_matrix_set_color(i+37, COLOR[0],COLOR[1],COLOR[2]);
+    }
+    // ZQSD et flèches directionnelles
+    const unsigned int COLOR2[3] = {200,130,70};
+    rgb_matrix_set_color(91, COLOR2[0],COLOR2[1],COLOR2[2]);
+    rgb_matrix_set_color(43, COLOR2[0],COLOR2[1],COLOR2[2]);
+    for(unsigned int i = 0; i < 3; i++){
+        rgb_matrix_set_color(i+61, COLOR2[0],COLOR2[1],COLOR2[2]);
+        rgb_matrix_set_color(i+103, COLOR2[0],COLOR2[1],COLOR2[2]);
     }
 
     // touches comme entrée et espace
-    const unsigned int nb_keys = 28;
-    const unsigned int special_keys[nb_keys] = {0,21,42,61,79,96,97,98,99,100,101,102,103,91,74,34,35,36,37,55,56,57,38,39,40,41,78,109};
-    for(unsigned int i = 0; i < nb_keys; i++)
-        rgb_matrix_set_color(special_keys[i], 0,50,200);
-
+    const unsigned int NB_KEYS = 29;
+    const unsigned int SPECIAL_KEYS[] = {0,20,41,60,78,95,96,97,98,99,100,101,102,90,73,33,34,35,36,54,55,56,37,38,39,40,77,108,107};
+    for(unsigned int i = 0; i < NB_KEYS; i++)
+        rgb_matrix_set_color(SPECIAL_KEYS[i], COLOR[0],COLOR[1],COLOR[2]);
     return false;
 }
 #endif
