@@ -90,9 +90,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     for (uint8_t i = 21; i <= 32; i++) 
         rgb_matrix_set_color(i, COLOR_SPECIAL[0],COLOR_SPECIAL[1],COLOR_SPECIAL[2]);
     for (uint8_t i = 57; i <= 59; i++) {
-        rgb_matrix_set_color(i, RGB_BLUE);
-        rgb_matrix_set_color(i+17, RGB_BLUE);
-        rgb_matrix_set_color(i+35, RGB_BLUE);
+        rgb_matrix_set_color(i,     COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
+        rgb_matrix_set_color(i+17,  COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
+        rgb_matrix_set_color(i+35,  COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
     }
     rgb_matrix_set_color(106, RGB_BLUE);
 
