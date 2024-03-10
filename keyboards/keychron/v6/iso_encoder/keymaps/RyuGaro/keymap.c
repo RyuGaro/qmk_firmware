@@ -23,7 +23,6 @@ enum layers{
   MAC_FN,
   WIN_BASE,
   WIN_FN,
-  WIN_X,
 };
 
 #define KC_TASK LGUI(KC_TAB)
@@ -38,7 +37,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LSFT,  KC_NUBS,  KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,              KC_RSFT,            KC_UP,              KC_P1,    KC_P2,    KC_P3,
         KC_LCTL,  KC_LOPT,  KC_LCMD,                                KC_SPC,                                 KC_RCMD,  KC_ROPT,  MO(MAC_FN), KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_P0,              KC_PDOT,  KC_PENT),
     [MAC_FN] = LAYOUT_iso_110(
-        _______,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,     RGB_TOG,  _______,  _______,  RGB_TOG,  _______,  _______,  _______,  MO(WIN_X),
+        _______,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,     RGB_TOG,  _______,  _______,  RGB_TOG,  _______,  _______,  _______,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
         RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,              _______,  _______,  _______,  _______,  _______,  _______,
         _______,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,                                _______,  _______,  _______,  _______,
@@ -58,13 +57,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,                                _______,  _______,  _______,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,  _______,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,            _______,            _______,  _______,  _______,
         _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,  _______,  _______,  _______,  _______,            _______,  _______),
-    [WIN_X] = LAYOUT_iso_110(
-        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
-        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
-        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,              _______,  _______,  _______,  _______,  _______,  _______,
-        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,                                _______,  _______,  _______,  _______,
-        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,              _______,            _______,            _______,  _______,  _______,
-        _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,  _______,  _______,  _______,  _______,            _______,  _______),
 };
 
 #if defined(ENCODER_MAP_ENABLE)
@@ -73,14 +65,13 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [MAC_FN]    = {ENCODER_CCW_CW(RGB_VAD, RGB_VAI) },
     [WIN_BASE]  = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [WIN_FN]    = {ENCODER_CCW_CW(RGB_VAD, RGB_VAI) },
-    [WIN_X]     = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
 };
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-
     const unsigned int COLOR_SPECIAL[3] = {200,130,170};
     const unsigned int COLOR_LETTERS[3] = {0,80,255};
     const unsigned int COLOR_ARROWS[3] = {120,0,220};
+    const unsigned int COLOR_CAPS_LOCK[3] = {255,100,0};
 
     // f1 à f12
     for (uint8_t i = 1; i <= 19; i++) 
@@ -94,10 +85,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         rgb_matrix_set_color(i+17,  COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
         rgb_matrix_set_color(i+35,  COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
     }
-    rgb_matrix_set_color(106, RGB_BLUE);
+    rgb_matrix_set_color(106, COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
 
     // lettres
-    
     for (uint8_t i = 42; i <= 53; i++) {
         rgb_matrix_set_color(i,     COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
         rgb_matrix_set_color(i+19,  COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
@@ -119,19 +109,63 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         rgb_matrix_set_color(SPECIAL_KEYS[i], COLOR_SPECIAL[0],COLOR_SPECIAL[1],COLOR_SPECIAL[2]);
 
     // CAPS_LOCK
-    if (host_keyboard_led_state().caps_lock)
-        rgb_matrix_set_color(60, RGB_RED);
-    else 
+    if (host_keyboard_led_state().caps_lock){
+        rgb_matrix_set_color(60, COLOR_CAPS_LOCK[0],COLOR_CAPS_LOCK[1],COLOR_CAPS_LOCK[2]);
+        for (uint8_t i = 42; i <= 52; i++) {
+            rgb_matrix_set_color(i,     COLOR_CAPS_LOCK[0],COLOR_CAPS_LOCK[1],COLOR_CAPS_LOCK[2]);
+            rgb_matrix_set_color(i+19,  COLOR_CAPS_LOCK[0],COLOR_CAPS_LOCK[1],COLOR_CAPS_LOCK[2]);
+            rgb_matrix_set_color(i+37,  COLOR_CAPS_LOCK[0],COLOR_CAPS_LOCK[1],COLOR_CAPS_LOCK[2]);
+        }
+        rgb_matrix_set_color(53, COLOR_CAPS_LOCK[0],COLOR_CAPS_LOCK[1],COLOR_CAPS_LOCK[2]);
+        rgb_matrix_set_color(72, COLOR_CAPS_LOCK[0],COLOR_CAPS_LOCK[1],COLOR_CAPS_LOCK[2]);
+
+        rgb_matrix_set_color(43, COLOR_CAPS_LOCK[0],COLOR_CAPS_LOCK[1],COLOR_CAPS_LOCK[2]);
+        for(unsigned int i = 0; i < 3; i++){
+            rgb_matrix_set_color(i+61, COLOR_CAPS_LOCK[0],COLOR_CAPS_LOCK[1],COLOR_CAPS_LOCK[2]);
+        }
+        for (uint8_t i = 21; i <= 32; i++){
+            rgb_matrix_set_color(i, COLOR_CAPS_LOCK[0],COLOR_CAPS_LOCK[1],COLOR_CAPS_LOCK[2]);
+        }
+    }
+    else{
         rgb_matrix_set_color(60, COLOR_SPECIAL[0],COLOR_SPECIAL[1],COLOR_SPECIAL[2]);
+        for (uint8_t i = 42; i <= 52; i++) {
+            rgb_matrix_set_color(i,     COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
+            rgb_matrix_set_color(i+19,  COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
+            rgb_matrix_set_color(i+37,  COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
+        }
+        rgb_matrix_set_color(53, COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
+        rgb_matrix_set_color(72, COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
+
+        rgb_matrix_set_color(43, COLOR_ARROWS[0],COLOR_ARROWS[1],COLOR_ARROWS[2]);
+        for(unsigned int i = 0; i < 3; i++){
+            rgb_matrix_set_color(i+61, COLOR_ARROWS[0],COLOR_ARROWS[1],COLOR_ARROWS[2]);
+        }
+        for (uint8_t i = 21; i <= 32; i++){
+            rgb_matrix_set_color(i, COLOR_SPECIAL[0],COLOR_SPECIAL[1],COLOR_SPECIAL[2]);
+        }
+    }
 
     // NUM_LOCK
-    if (host_keyboard_led_state().num_lock)
+    if (host_keyboard_led_state().num_lock){
         rgb_matrix_set_color(37, COLOR_SPECIAL[0],COLOR_SPECIAL[1],COLOR_SPECIAL[2]);
-    else 
+        for (uint8_t i = 57; i <= 59; i++) {
+            rgb_matrix_set_color(i,     COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
+            rgb_matrix_set_color(i+17,  COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
+            rgb_matrix_set_color(i+35,  COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
+        }
+        rgb_matrix_set_color(106, COLOR_LETTERS[0],COLOR_LETTERS[1],COLOR_LETTERS[2]);
+    }
+    else {
         rgb_matrix_set_color(37, 0, 0, 0);
+        for (uint8_t i = 57; i <= 59; i++) {
+            rgb_matrix_set_color(i,0, 0, 0);
+            rgb_matrix_set_color(i+17, 0, 0, 0);
+            rgb_matrix_set_color(i+35, 0, 0, 0);
+        }
+        rgb_matrix_set_color(106, 0, 0, 0);
+    }
 
     return false;
 }
-
 #endif
-
